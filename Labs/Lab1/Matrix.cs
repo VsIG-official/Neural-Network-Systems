@@ -2,20 +2,35 @@ using System;
 
 namespace MatrixLibrary
 {
+	public class MatrixException : Exception
+    {
+        public MatrixException(string message)
+            : base(message) { }
+    }
+
     public class Matrix : ICloneable
     {
         public int Rows { get; }
 
         public int Columns { get; }
-        
+
         public double[,] Array { get; }
-        
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
+
         public Matrix(int rows, int columns)
         {
+            if (rows < 0 || columns < 0)
+			{
+                throw new ArgumentOutOfRangeException("rows",
+                    "Rows should be more than 0");
+            }
+            else if(columns < 0)
+			{
+                throw new ArgumentOutOfRangeException("columns",
+                    "Columns should be more than 0");
+            }
+
             Rows = rows;
             Columns = columns;
-
             Array = new double[rows, columns];
         }
 
@@ -47,14 +62,8 @@ namespace MatrixLibrary
             }
         }
 
-        public object Clone()
-        {
-            Matrix deepClone = new Matrix(Rows, Columns);
+        public object Clone() => new Matrix(Array);
 
-            return deepClone;
-        }
-
-        /// <exception cref="MatrixException"></exception>
         public static Matrix operator +(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1 == null)
@@ -66,6 +75,12 @@ namespace MatrixLibrary
 			{
                 throw new ArgumentNullException("matrix2",
                     "matrix2 shouldn't be null");
+            }
+
+			if (matrix1.Rows != matrix2.Rows || 
+                matrix1.Columns != matrix2.Columns)
+			{
+                throw new MatrixException("Matrixes should have same dimensions");
             }
 
             Matrix result = new Matrix(matrix1.Rows, matrix1.Columns);
@@ -81,7 +96,6 @@ namespace MatrixLibrary
             return result;
         }
 
-        /// <exception cref="MatrixException"></exception>
         public static Matrix operator -(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1 == null)
@@ -93,6 +107,12 @@ namespace MatrixLibrary
             {
                 throw new ArgumentNullException("matrix2",
                     "matrix2 shouldn't be null");
+            }
+
+            if (matrix1.Rows != matrix2.Rows ||
+                matrix1.Columns != matrix2.Columns)
+            {
+                throw new MatrixException("Matrixes should have same dimensions");
             }
 
             Matrix result = new Matrix(matrix1.Rows, matrix1.Columns);
@@ -108,7 +128,6 @@ namespace MatrixLibrary
             return result;
         }
 
-        /// <exception cref="MatrixException"></exception>
         public static Matrix operator *(Matrix matrix1, Matrix matrix2)
         {
             if (matrix1 == null)
@@ -120,6 +139,11 @@ namespace MatrixLibrary
             {
                 throw new ArgumentNullException("matrix2",
                     "matrix2 shouldn't be null");
+            }
+
+            if (matrix1.Columns != matrix2.Rows)
+            {
+                throw new MatrixException("Matrixes should have same dimensions");
             }
 
             Matrix result = new Matrix(matrix1.Rows, matrix2.Columns);
@@ -138,13 +162,18 @@ namespace MatrixLibrary
             return result;
         }
 
-        /// <exception cref="MatrixException"></exception>
         public Matrix Add(Matrix matrix)
         {
             if (matrix == null)
             {
                 throw new ArgumentNullException("matrix",
                     "matrix shouldn't be null");
+            }
+
+            if (Rows != matrix.Rows ||
+                Columns != matrix.Columns)
+            {
+                throw new MatrixException("Matrixes should have same dimensions");
             }
 
             for (int i = 0; i < Rows; i++)
@@ -158,13 +187,18 @@ namespace MatrixLibrary
             return this;
         }
 
-        /// <exception cref="MatrixException"></exception>
         public Matrix Subtract(Matrix matrix)
         {
             if (matrix == null)
             {
                 throw new ArgumentNullException("matrix",
                     "matrix shouldn't be null");
+            }
+
+            if (Rows != matrix.Rows ||
+                Columns != matrix.Columns)
+            {
+                throw new MatrixException("Matrixes should have same dimensions");
             }
 
             for (int i = 0; i < Rows; i++)
@@ -178,13 +212,17 @@ namespace MatrixLibrary
             return this;
         }
 
-        /// <exception cref="MatrixException"></exception>
         public Matrix Multiply(Matrix matrix)
         {
             if (matrix == null)
             {
                 throw new ArgumentNullException("matrix",
                     "matrix shouldn't be null");
+            }
+
+            if (Columns != matrix.Rows)
+            {
+                throw new MatrixException("Matrixes should have same dimensions");
             }
 
             Matrix result = new Matrix(Rows, matrix.Columns);
@@ -203,14 +241,26 @@ namespace MatrixLibrary
             return result;
         }
 
-        /// <summary>
-        /// Tests if <see cref="Matrix"/> is identical to this Matrix.
-        /// </summary>
-        /// <param name="obj">Object to compare with. (Can be null)</param>
-        /// <returns>True if matrices are equal, false if are not equal.</returns>
         public override bool Equals(object obj)
         {
-            throw new NotImplementedException();
+            bool areEqual = false;
+
+            if (obj is Matrix matrix && 
+                Rows == matrix.Rows && Columns == matrix.Columns)
+            {
+				for (int i = 0; i < matrix.Rows; i++)
+				{
+					for (int j = 0; j < matrix.Columns; j++)
+					{
+						if (Array[i, j] == matrix[i, j])
+						{
+                            areEqual = true;
+                        }
+					}
+        		}
+            }
+
+            return areEqual;
         }
 
 		public override int GetHashCode()
