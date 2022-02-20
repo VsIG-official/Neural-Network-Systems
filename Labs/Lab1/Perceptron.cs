@@ -1,17 +1,27 @@
-﻿namespace Lab1
+﻿using System.Numerics;
+
+namespace Lab1
 {
 	public class Perceptron
 	{
-		public double[,] Input { get; }
-		public double[] Weights { get; }
-		public double[] Output { get; }
+		#region Fields
+
+		public double[,] Input { get; set; }
+		public double[] Weights { get; set; }
+		public int RunTimes { get; set; } = 1000;
+
+		private readonly double learningRate = 0.5;
+		private readonly double bias = 0.03;
 
 		private readonly Random random = new();
+
+		#endregion Fields
+
+		#region Constructors
 
 		public Perceptron(double[,] input)
 		{
 			Input = input;
-			Output = new double[input.GetLength(0)];
 			Weights = GenerateWeights();
 		}
 
@@ -19,6 +29,10 @@
 		{
 			Weights = weights;
 		}
+
+		#endregion Constructors
+
+		#region Methods
 
 		private double[] GenerateWeights()
 		{
@@ -31,5 +45,21 @@
 
 			return weights;
 		}
+
+		private double Sigmoid(double x)
+		{
+			return 1 / (1 + (float)Math.Exp(-x));
+		}
+
+		private double SigmoidDerivative(double x)
+		{
+			return Sigmoid(x) * (1 - Sigmoid(x));
+		}
+
+		public void Start()
+		{
+		}
+
+		#endregion Methods
 	}
 }

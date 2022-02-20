@@ -1,10 +1,22 @@
-﻿namespace Labs
+﻿using Lab1;
+
+namespace Labs
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
+            double[,] input = new double[,] 
+            { 
+                { 1, 0 }, 
+                { 1, 1 }, 
+                { 0, 1 }, 
+                { 0, 0 } 
+            };
+
+            int[] outputs = { 1, 0, 1, 0 };
+
+            Perceptron perceptron = new(input);
+        }    
     }
 }
