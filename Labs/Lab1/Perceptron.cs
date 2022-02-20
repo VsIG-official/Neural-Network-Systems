@@ -58,6 +58,14 @@ namespace Lab1
 
 		public void Start()
 		{
+			double first_layer_length = Input.GetUpperBound(0);
+			double second_layer_length = Input.GetUpperBound(1);
+
+			double first_layer_weights = random.NextDouble() * 
+				(first_layer_length - second_layer_length) + second_layer_length;
+
+			double second_layer_weights = random.NextDouble() *
+				(1 - first_layer_length) + first_layer_length;
 		}
 
 		#endregion Methods
