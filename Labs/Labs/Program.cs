@@ -17,6 +17,7 @@ namespace Labs
             int[] outputs = { 1, 0, 1, 0 };
 
             Perceptron perceptron = new(input);
+            perceptron.Start();
         }    
     }
 }
