@@ -15,6 +15,13 @@ namespace Lab1
 
 		private readonly Random random = new();
 
+
+		private double[,] firstLayerWeights;
+		private double[,] secondLayerWeights;
+		//private List<double> firstLayerWeights = new();
+		//private List<double> secondLayerWeights = new();
+
+
 		#endregion Fields
 
 		#region Constructors
@@ -58,31 +65,80 @@ namespace Lab1
 
 		public void Start()
 		{
-			double first_layer_length = Input.GetUpperBound(0) + 1;
-			double second_layer_length = Input.GetUpperBound(1) + 1;
+			int firstLayerLength = Input.GetUpperBound(0) + 1;
+			int secondLayerLength = Input.GetUpperBound(1) + 1;
 
-			List<double> first_layer_weights = new();
+			firstLayerWeights = new double[secondLayerLength, firstLayerLength];
 
-			for (int i = 0; i < first_layer_length * 2; i++)
+			for (int i = 0; i < secondLayerLength; i++)
 			{
-				first_layer_weights.Add(random.NextDouble());
+				for (int j = 0; j < firstLayerLength; j++)
+				{
+					firstLayerWeights[i, j] = random.NextDouble();
+				}
 			}
 
-			List<double> second_layer_weights = new();
+			secondLayerWeights = new double[firstLayerLength, 1];
 
-			for (int i = 0; i < second_layer_length * 2; i++)
+			for (int i = 0; i < firstLayerLength; i++)
 			{
-				second_layer_weights.Add(random.NextDouble());
+				for (int j = 0; j < 1; j++)
+				{
+					secondLayerWeights[i, j] = random.NextDouble();
+				}
 			}
+		}
 
-			double[,] first = { { 1, 1 } };
-			double[,] second = { { 0.62013305, 0.79208935, 0.02272945, 0.85735877 },
-				{ 0.91331244, 0.78375064, 0.04980426, 0.30849369 } };
+		public double Predict(double[,] xTest)
+		{
+			Matrix firstMatrix = new(xTest);
 
-			Matrix firstMatrix = new(first);
-			Matrix secondMatrix = new(second);
+			//double[,] firstLayerWeights = 
+			//	{ 
+			//		{ 0.96753942  , 0.85942232  , 0.93125677  , 0.54035413 },
+			//		{ 0.65803162  , 0.65246242  , 0.65420492  , 0.59330152 }
+			//	};
 
+			//double[,] secondLayerWeights =
+			//	{
+			//		{ 0.6266687 },
+			//		{ 0.69973548},
+			//		{ 0.46207168 },
+			//		{ 0.9354296  }
+			//	};
+
+			Matrix secondMatrix = new(firstLayerWeights);
+
+			// Works
 			Matrix dot = firstMatrix.Multiply(secondMatrix);
+
+			double[,] firstLayer = dot.Array;
+
+			for (int i = 0; i < dot.Rows; i++)
+			{
+				for (int j = 0; j < dot.Columns; j++)
+				{
+					firstLayer[i, j] = Sigmoid(firstLayer[i, j]);
+				}
+			}
+
+			firstMatrix = new(firstLayer);
+
+			secondMatrix = new(secondLayerWeights);
+
+			dot = firstMatrix.Multiply(secondMatrix);
+
+			double[,] secondLayer = dot.Array;
+
+			for (int i = 0; i < dot.Rows; i++)
+			{
+				for (int j = 0; j < dot.Columns; j++)
+				{
+					secondLayer[i, j] = Sigmoid(secondLayer[i, j]);
+				}
+			}
+
+			return 0;
 		}
 
 		#endregion Methods
