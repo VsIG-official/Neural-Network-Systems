@@ -89,7 +89,7 @@ namespace Lab1
 			}
 		}
 
-		public double Predict(double[,] xTest)
+		public double[,] Predict(double[,] xTest)
 		{
 			Matrix firstMatrix = new(xTest);
 
@@ -109,7 +109,6 @@ namespace Lab1
 
 			Matrix secondMatrix = new(firstLayerWeights);
 
-			// Works
 			Matrix dot = firstMatrix.Multiply(secondMatrix);
 
 			double[,] firstLayer = dot.Array;
@@ -138,7 +137,64 @@ namespace Lab1
 				}
 			}
 
-			return 0;
+			return secondLayer;
+		}
+
+		public void Fit(double[,] xTrain, double[,] yTrain, int iterations)
+		{
+			for (var k = 0; k < iterations; k++)
+			{
+				Matrix firstMatrix = new(xTrain);
+
+				Matrix secondMatrix = new(firstLayerWeights);
+
+				Matrix dot = firstMatrix.Multiply(secondMatrix);
+
+				double[,] firstLayer = dot.Array;
+
+				for (int i = 0; i < dot.Rows; i++)
+				{
+					for (int j = 0; j < dot.Columns; j++)
+					{
+						firstLayer[i, j] += bias;
+						firstLayer[i, j] = Sigmoid(firstLayer[i, j]);
+					}
+				}
+
+				////
+
+				firstMatrix = new(firstLayer);
+
+				secondMatrix = new(secondLayerWeights);
+
+				dot = firstMatrix.Multiply(secondMatrix);
+
+				double[,] secondLayer = dot.Array;
+
+				for (int i = 0; i < dot.Rows; i++)
+				{
+					for (int j = 0; j < dot.Columns; j++)
+					{
+						secondLayer[i, j] = Sigmoid(secondLayer[i, j]);
+					}
+				}
+
+				////
+
+				double[,] secondLayerError = dot.Array;
+
+				for (int i = 0; i < dot.Rows; i++)
+				{
+					for (int j = 0; j < dot.Columns; j++)
+					{
+						secondLayerError[i, j] = yTrain[i, j] - secondLayer[i, j];
+					}
+				}
+
+				////
+				
+				
+			}
 		}
 
 		#endregion Methods
