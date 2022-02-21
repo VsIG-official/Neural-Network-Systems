@@ -117,17 +117,17 @@ namespace Lab1
 				}
 			}
 
-			firstMatrix = new(firstLayer);
+			Matrix firstMatrix1 = new(firstLayer);
 
-			secondMatrix = new(secondLayerWeights);
+			Matrix secondMatrix1 = new(secondLayerWeights);
 
-			dot = firstMatrix.Multiply(secondMatrix);
+			Matrix dot1 = firstMatrix1.Multiply(secondMatrix1);
 
-			double[,] secondLayer = dot.Array;
+			double[,] secondLayer = dot1.Array;
 
-			for (int i = 0; i < dot.Rows; i++)
+			for (int i = 0; i < dot1.Rows; i++)
 			{
-				for (int j = 0; j < dot.Columns; j++)
+				for (int j = 0; j < dot1.Columns; j++)
 				{
 					secondLayer[i, j] = Sigmoid(secondLayer[i, j]);
 				}
@@ -172,17 +172,17 @@ namespace Lab1
 
 				////
 
-				firstMatrix = new(firstLayer);
+				Matrix firstMatrix1 = new(firstLayer);
 
-				secondMatrix = new(secondLayerWeights);
+				Matrix secondMatrix1 = new(secondLayerWeights);
 
-				dot = firstMatrix.Multiply(secondMatrix);
+				Matrix dot1 = firstMatrix1.Multiply(secondMatrix1);
 
-				double[,] secondLayer = dot.Array;
+				double[,] secondLayer = dot1.Array;
 
-				for (int i = 0; i < dot.Rows; i++)
+				for (int i = 0; i < dot1.Rows; i++)
 				{
-					for (int j = 0; j < dot.Columns; j++)
+					for (int j = 0; j < dot1.Columns; j++)
 					{
 						secondLayer[i, j] = Sigmoid(secondLayer[i, j]);
 					}
@@ -190,11 +190,11 @@ namespace Lab1
 
 				////
 
-				double[,] secondLayerError = dot.Array;
+				double[,] secondLayerError = dot1.Array;
 
-				for (int i = 0; i < dot.Rows; i++)
+				for (int i = 0; i < dot1.Rows; i++)
 				{
-					for (int j = 0; j < dot.Columns; j++)
+					for (int j = 0; j < dot1.Columns; j++)
 					{
 						secondLayerError[i, j] = yTrain[i, j] - secondLayer[i, j];
 					}
@@ -254,13 +254,28 @@ namespace Lab1
 				//		{ 0.00621122 }
 				//	};
 
-				dot = firstLayerMatrix.Transpose().Multiply(secondLayerDeltaMatrix); 
+				Matrix dot2 = firstLayerMatrix.Transpose().Multiply(secondLayerDeltaMatrix); 
 
 				for (int i = 0; i < secondLayerWeights.GetUpperBound(0) + 1; i++)
 				{
 					for (int j = 0; j < secondLayerWeights.GetUpperBound(1) + 1; j++)
 					{
-						secondLayerWeights[i, j] += dot[i, j];
+						secondLayerWeights[i, j] += dot2[i, j];
+					}
+				}
+
+				////
+
+				Matrix firstMatrix2 = new(xTrain);
+				firstMatrix2 = firstMatrix2.Transpose();
+
+				Matrix dot3 = firstMatrix2.Multiply(firstLayerDeltaMatrix);
+
+				for (int i = 0; i < firstLayerWeights.GetUpperBound(0) + 1; i++)
+				{
+					for (int j = 0; j < firstLayerWeights.GetUpperBound(1) + 1; j++)
+					{
+						firstLayerWeights[i, j] += dot3[i, j];
 					}
 				}
 			}

@@ -27,9 +27,10 @@ namespace Labs
 
             double[,] xTest = { { 1, 1 } };
 
-            perceptron.Predict(input);
-            perceptron.Fit(input, outputs, 1000);
-            perceptron.Predict(input);
+            perceptron.Predict(xTest);
+            perceptron.Fit(input, outputs, 10000);
+            double[,] pred = perceptron.Predict(xTest);
+            Console.WriteLine(pred);
         }
     }
 }
