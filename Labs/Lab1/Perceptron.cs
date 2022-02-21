@@ -142,6 +142,12 @@ namespace Lab1
 			{
 				Matrix firstMatrix = new(xTrain);
 
+				double[,] firstLayerWeights = new double[2, 4]
+				{
+					{ 0.73495559, 0.08430739, 0.66952947, 0.56732125 },
+					{ 0.48628304, 0.08544174, 0.49314105, 0.79496779 }
+				};
+
 				Matrix secondMatrix = new(firstLayerWeights);
 
 				Matrix dot = firstMatrix.Multiply(secondMatrix);
@@ -153,6 +159,13 @@ namespace Lab1
 					for (int j = 0; j < dot.Columns; j++)
 					{
 						firstLayer[i, j] += bias;
+					}
+				}
+
+				for (int i = 0; i < dot.Rows; i++)
+				{
+					for (int j = 0; j < dot.Columns; j++)
+					{
 						firstLayer[i, j] = Sigmoid(firstLayer[i, j]);
 					}
 				}
@@ -216,22 +229,40 @@ namespace Lab1
 
 				////
 
-				for (int i = 0; i < firstLayer.GetUpperBound(0) + 1; i++)
+				double[,] firstLayerDerivative = firstLayer;
+
+				for (int i = 0; i < firstLayerDerivative.GetUpperBound(0) + 1; i++)
 				{
-					for (int j = 0; j < firstLayer.GetUpperBound(1) + 1; j++)
+					for (int j = 0; j < firstLayerDerivative.GetUpperBound(1) + 1; j++)
 					{
-						firstLayer[i, j] = SigmoidDerivative(firstLayer[i, j]);
+						firstLayerDerivative[i, j] = SigmoidDerivative(firstLayer[i, j]);
 					}
 				}
 
-				Matrix firstLayerMatrix = new(firstLayer);
+				Matrix firstLayerMatrix = new(firstLayerDerivative);
 
 				Matrix firstLayerDeltaMatrix = firstLayerMatrix.
 					Hadamard(firstLayerErrorMatrix);
 
 				////
-				
 
+				//double[,] secondLayerWeights1 = 
+				//	{ 
+				//		{ 0.45343229 },
+				//		{ 0.68019613 },
+				//		{ 0.10682657 },
+				//		{ 0.00621122 }
+				//	};
+
+				dot = firstLayerMatrix.Transpose().Multiply(secondLayerDeltaMatrix); 
+
+				for (int i = 0; i < secondLayerWeights.GetUpperBound(0) + 1; i++)
+				{
+					for (int j = 0; j < secondLayerWeights.GetUpperBound(1) + 1; j++)
+					{
+						secondLayerWeights[i, j] += dot[i, j];
+					}
+				}
 			}
 		}
 
