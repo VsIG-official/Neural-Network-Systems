@@ -1,4 +1,4 @@
-﻿using SML.Matrix;
+﻿using SML.Matrices;
 
 namespace Lab1
 {
@@ -15,12 +15,8 @@ namespace Lab1
 
 		private readonly Random random = new();
 
-
-		private double[,] firstLayerWeights;
-		private double[,] secondLayerWeights;
-		//private List<double> firstLayerWeights = new();
-		//private List<double> secondLayerWeights = new();
-
+		private double[,] firstLayerWeights = new double[0, 0];
+		private double[,] secondLayerWeights = new double[0, 0];
 
 		#endregion Fields
 
@@ -191,9 +187,51 @@ namespace Lab1
 					}
 				}
 
+				//////////////////
+				
+				Matrix secondLayerErrorMatrix = new(secondLayerError);
+
+				for (int i = 0; i < secondLayer.GetUpperBound(0)+1; i++)
+				{
+					for (int j = 0; j < secondLayer.GetUpperBound(1)+1; j++)
+					{
+						secondLayer[i, j] = SigmoidDerivative(secondLayer[i, j]);
+					}
+				}
+
+				Matrix secondLayerMatrix = new(secondLayer);
+
+				Matrix secondLayerDeltaMatrix = secondLayerMatrix.
+					Hadamard(secondLayerErrorMatrix);
+
 				////
 				
+				Matrix secondLayerWeightsMatrix = new(secondLayerWeights);
+
+				Matrix secondLayerWeightsMatrixTransposed =
+					secondLayerWeightsMatrix.Transpose();
+
+				Matrix firstLayerErrorMatrix = secondLayerDeltaMatrix.
+					Multiply(secondLayerWeightsMatrixTransposed);
+
+				////
+
+				for (int i = 0; i < firstLayer.GetUpperBound(0) + 1; i++)
+				{
+					for (int j = 0; j < firstLayer.GetUpperBound(1) + 1; j++)
+					{
+						firstLayer[i, j] = SigmoidDerivative(firstLayer[i, j]);
+					}
+				}
+
+				Matrix firstLayerMatrix = new(firstLayer);
+
+				Matrix firstLayerDeltaMatrix = firstLayerMatrix.
+					Hadamard(firstLayerErrorMatrix);
+
+				////
 				
+
 			}
 		}
 
