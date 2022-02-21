@@ -11,4 +11,10 @@
     <ProjectReference Include="..\Lab1\Lab1.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="SML">
+      <HintPath>..\Libs\SML.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

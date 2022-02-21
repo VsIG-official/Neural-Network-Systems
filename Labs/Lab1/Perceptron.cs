@@ -1,5 +1,4 @@
-﻿using MatrixLibrary;
-using System.Numerics;
+﻿using SML.Matrix;
 
 namespace Lab1
 {
