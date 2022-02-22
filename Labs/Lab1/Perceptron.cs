@@ -8,7 +8,7 @@ namespace Lab1
 
 		public double[,] Input { get; set; }
 		public double[] Weights { get; set; }
-		public int RunTimes { get; set; } = 1000;
+		public int RunTimes { get; set; } = 10000;
 
 		private readonly double bias = 0.03;
 
@@ -143,11 +143,11 @@ namespace Lab1
 
 					//Console.WriteLine(xTrainMatrix.ToString());
 
-				double[,] firstLayerWeights = new double[2, 4]
-				{
-					{ 0.81377233, 0.36367063, 0.9062002, 0.13996215 },
-					{ 0.95584121, 0.82865029, 0.50139206, 0.50926942 }
-				};
+				//double[,] firstLayerWeights = new double[2, 4]
+				//{
+				//	{ 0.81377233, 0.36367063, 0.9062002, 0.13996215 },
+				//	{ 0.95584121, 0.82865029, 0.50139206, 0.50926942 }
+				//};
 
 				Matrix firstLayerWeightsMatrix = new(firstLayerWeights);
 
@@ -181,13 +181,13 @@ namespace Lab1
 
 					//Console.WriteLine(firstLayerMatrix1.ToString());
 
-				double[,] secondLayerWeights = new double[4, 1]
-				{
-					{ 0.16980977 },
-					{ 0.92468996 },
-					{ 0.27498607 },
-					{ 0.07080158 }
-				};
+				//double[,] secondLayerWeights = new double[4, 1]
+				//{
+				//	{ 0.16980977 },
+				//	{ 0.92468996 },
+				//	{ 0.27498607 },
+				//	{ 0.07080158 }
+				//};
 
 				Matrix secondLayerWeightsMatrix1 = new(secondLayerWeights);
 

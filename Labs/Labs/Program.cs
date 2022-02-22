@@ -26,9 +26,9 @@ namespace Labs
             Perceptron perceptron = new(input);
             perceptron.Start();
 
-            double[,] xTest = { { 0, 1 } };
-            double[,] xTest2 = { { 1, 1 } };
-            double[,] xTest3 = { { 0, 0 } };
+            double[,] xTest = { { 1, 1 } };
+            double[,] xTest2 = { { 0, 0 } };
+            double[,] xTest3 = { { 0, 1 } };
             double[,] xTest4 = { { 1, 0 } };
 
             perceptron.Predict(input);
