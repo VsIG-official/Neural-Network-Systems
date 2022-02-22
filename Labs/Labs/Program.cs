@@ -3,54 +3,71 @@ using SML.Matrices;
 
 namespace Labs;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static readonly double[,] s_input = new double[,]
     {
-        double[,] input = new double[,] 
-        { 
-            { 0, 0 }, 
-            { 0, 1 }, 
-            { 1, 0 }, 
-            { 1, 1 } 
-        };
+        { 0, 0 },
+        { 0, 1 },
+        { 1, 0 },
+        { 1, 1 }
+    };
 
-        double[,] outputs = 
-            { 
-                { 0 }, 
-                { 1 },
-                { 1 }, 
-                { 0 } 
-            };
+    private static readonly double[,] s_outputs =
+    {
+        { 0 },
+        { 1 },
+        { 1 },
+        { 0 }
+    };
 
-        Perceptron perceptron = new(input);
+    private static readonly double[,] s_xTest = { { 1, 1 } };
+    private static readonly double[,] s_xTest2 = { { 0, 0 } };
+    private static readonly double[,] s_xTest3 = { { 0, 1 } };
+    private static readonly double[,] s_xTest4 = { { 1, 0 } };
+
+    private static void Main(string[] args)
+    {
+        Lab1();
+    }
+
+    private static void Lab1()
+    {
+        Perceptron perceptron = new(s_input);
         perceptron.Start();
 
-        double[,] xTest = { { 1, 1 } };
-        double[,] xTest2 = { { 0, 0 } };
-        double[,] xTest3 = { { 0, 1 } };
-        double[,] xTest4 = { { 1, 0 } };
+        Console.WriteLine("Predictions before training:\n");
+        RunPredictions(perceptron);
 
-        perceptron.Predict(input);
+        perceptron.Train(s_input, s_outputs, 10000);
 
-        perceptron.Fit(input, outputs, 10000);
+        Console.WriteLine("//////////////////////////////\n");
 
-        perceptron.Predict(input);
+        Console.WriteLine("Predictions after training:\n");
+        RunPredictions(perceptron);
+    }
 
-        Matrix firstPrediction = new(perceptron.Predict(xTest));
+    private static void RunPredictions(Perceptron perceptron)
+    {
+        Matrix firstPrediction = new(perceptron.Predict(s_xTest));
 
-            Console.WriteLine(firstPrediction.ToString());
+        Matrix secondPrediction = new(perceptron.Predict(s_xTest2));
 
-        Matrix secondPrediction = new(perceptron.Predict(xTest2));
+        Matrix thirdPrediction = new(perceptron.Predict(s_xTest3));
 
-            Console.WriteLine(secondPrediction.ToString());
+        Matrix fourthPrediction = new(perceptron.Predict(s_xTest4));
 
-        Matrix thirdPrediction = new(perceptron.Predict(xTest3));
 
-            Console.WriteLine(thirdPrediction.ToString());
+        Console.WriteLine("Prediction for 1, 1 is:\n");
+        Console.WriteLine(firstPrediction.ToString());
 
-        Matrix fourthPrediction = new(perceptron.Predict(xTest4));
+        Console.WriteLine("Prediction for 0, 0 is:\n");
+        Console.WriteLine(secondPrediction.ToString());
 
-            Console.WriteLine(fourthPrediction.ToString());
+        Console.WriteLine("Prediction for 0, 1 is:\n");
+        Console.WriteLine(thirdPrediction.ToString());
+
+        Console.WriteLine("Prediction for 1, 0 is:\n");
+        Console.WriteLine(fourthPrediction.ToString());
     }
 }

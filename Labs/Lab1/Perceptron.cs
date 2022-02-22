@@ -92,7 +92,8 @@ public class Perceptron
 
 		Matrix secondLayerWeightsMatrix = new(_secondLayerWeights);
 
-		Matrix firstLayerDotsecondLayerWeights = firstLayerMatrix.Multiply(secondLayerWeightsMatrix);
+		Matrix firstLayerDotsecondLayerWeights = firstLayerMatrix
+            .Multiply(secondLayerWeightsMatrix);
 
 		double[,] secondLayer = firstLayerDotsecondLayerWeights.Array;
 
@@ -107,7 +108,7 @@ public class Perceptron
 		return secondLayer;
 	}
 
-	public void Fit(double[,] xTrain, double[,] yTrain, int iterations)
+	public void Train(double[,] xTrain, double[,] yTrain, int iterations)
 	{
 		for (var k = 0; k < iterations; k++)
 		{
