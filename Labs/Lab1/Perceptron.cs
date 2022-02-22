@@ -7,7 +7,6 @@ namespace Lab1
 		#region Fields
 
 		public double[,] Input { get; set; }
-		public double[] Weights { get; set; }
 		public int RunTimes { get; set; } = 10000;
 
 		private readonly double bias = 0.03;
@@ -24,41 +23,13 @@ namespace Lab1
 		public Perceptron(double[,] input)
 		{
 			Input = input;
-			Weights = GenerateWeights();
-		}
-
-		public Perceptron(double[,] input, double[] weights) : this(input)
-		{
-			Weights = weights;
 		}
 
 		#endregion Constructors
 
 		#region Methods
 
-		private double[] GenerateWeights()
-		{
-			double[] weights = new double[Input.GetLength(0)];
-
-			for (int i = 0; i < weights.Length; i++)
-			{
-				weights[i] = random.NextDouble();
-			}
-
-			return weights;
-		}
-
-		public double Sigmoid(double x)
-		{
-			return 1 / (1 + (float)Math.Exp(-x));
-		}
-
-		public double SigmoidDerivative(double x)
-		{
-			return Sigmoid(x) * (1 - Sigmoid(x));
-		}
-
-		public void Start()
+		private void GenerateWeights()
 		{
 			int firstLayerLength = Input.GetUpperBound(0) + 1;
 			int secondLayerLength = Input.GetUpperBound(1) + 1;
@@ -84,23 +55,24 @@ namespace Lab1
 			}
 		}
 
+		private static double Sigmoid(double x)
+		{
+			return 1 / (1 + (float)Math.Exp(-x));
+		}
+
+		private static double SigmoidDerivative(double x)
+		{
+			return Sigmoid(x) * (1 - Sigmoid(x));
+		}
+
+		public void Start()
+		{
+			GenerateWeights();
+		}
+
 		public double[,] Predict(double[,] xTest)
 		{
 			Matrix firstMatrix = new(xTest);
-
-			//double[,] firstLayerWeights = 
-			//	{ 
-			//		{ 0.96753942  , 0.85942232  , 0.93125677  , 0.54035413 },
-			//		{ 0.65803162  , 0.65246242  , 0.65420492  , 0.59330152 }
-			//	};
-
-			//double[,] secondLayerWeights =
-			//	{
-			//		{ 0.6266687 },
-			//		{ 0.69973548},
-			//		{ 0.46207168 },
-			//		{ 0.9354296  }
-			//	};
 
 			Matrix secondMatrix = new(firstLayerWeights);
 
