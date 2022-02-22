@@ -115,21 +115,21 @@ public class Perceptron
 
 			Matrix firstLayerWeightsMatrix = new(_firstLayerWeights);
 
-			Matrix xTrainDotFirstLayerWeigth = xTrainMatrix.Multiply(firstLayerWeightsMatrix);
+			Matrix dotXTrainAndFirstLayerWeigth = xTrainMatrix.Multiply(firstLayerWeightsMatrix);
 
-			double[,] firstLayer = xTrainDotFirstLayerWeigth.Array;
+			double[,] firstLayer = dotXTrainAndFirstLayerWeigth.Array;
 
-			for (int i = 0; i < xTrainDotFirstLayerWeigth.Rows; i++)
+			for (int i = 0; i < dotXTrainAndFirstLayerWeigth.Rows; i++)
 			{
-				for (int j = 0; j < xTrainDotFirstLayerWeigth.Columns; j++)
+				for (int j = 0; j < dotXTrainAndFirstLayerWeigth.Columns; j++)
 				{
 					firstLayer[i, j] += _bias;
 				}
 			}
 
-			for (int i = 0; i < xTrainDotFirstLayerWeigth.Rows; i++)
+			for (int i = 0; i < dotXTrainAndFirstLayerWeigth.Rows; i++)
 			{
-				for (int j = 0; j < xTrainDotFirstLayerWeigth.Columns; j++)
+				for (int j = 0; j < dotXTrainAndFirstLayerWeigth.Columns; j++)
 				{
 					firstLayer[i, j] = Sigmoid(firstLayer[i, j]);
 				}
@@ -223,15 +223,14 @@ public class Perceptron
 
 			Matrix xTrainTransposedMatrix = xTrainMatrix.Transpose();
 
-			Matrix xTrainTransposedDotfirstLayerDeltaMatrix =
+			Matrix dotXTrainTransposedAndFirstLayerDeltaMatrix =
                 xTrainTransposedMatrix.Multiply(firstLayerDeltaMatrix);
-
 
 			for (int i = 0; i < _firstLayerWeights.GetUpperBound(0) + 1; i++)
 			{
 				for (int j = 0; j < _firstLayerWeights.GetUpperBound(1) + 1; j++)
 				{
-					_firstLayerWeights[i, j] += xTrainTransposedDotfirstLayerDeltaMatrix[i, j];
+					_firstLayerWeights[i, j] += dotXTrainTransposedAndFirstLayerDeltaMatrix[i, j];
 				}
 			}
 		}
