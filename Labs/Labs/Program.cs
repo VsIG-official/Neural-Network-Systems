@@ -1,57 +1,56 @@
 ﻿using Lab1;
 using SML.Matrices;
 
-namespace Labs
+namespace Labs;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            double[,] input = new double[,] 
+        double[,] input = new double[,] 
+        { 
+            { 0, 0 }, 
+            { 0, 1 }, 
+            { 1, 0 }, 
+            { 1, 1 } 
+        };
+
+        double[,] outputs = 
             { 
-                { 0, 0 }, 
-                { 0, 1 }, 
-                { 1, 0 }, 
-                { 1, 1 } 
+                { 0 }, 
+                { 1 },
+                { 1 }, 
+                { 0 } 
             };
 
-            double[,] outputs = 
-                { 
-                    { 0 }, 
-                    { 1 },
-                    { 1 }, 
-                    { 0 } 
-                };
+        Perceptron perceptron = new(input);
+        perceptron.Start();
 
-            Perceptron perceptron = new(input);
-            perceptron.Start();
+        double[,] xTest = { { 1, 1 } };
+        double[,] xTest2 = { { 0, 0 } };
+        double[,] xTest3 = { { 0, 1 } };
+        double[,] xTest4 = { { 1, 0 } };
 
-            double[,] xTest = { { 1, 1 } };
-            double[,] xTest2 = { { 0, 0 } };
-            double[,] xTest3 = { { 0, 1 } };
-            double[,] xTest4 = { { 1, 0 } };
+        perceptron.Predict(input);
 
-            perceptron.Predict(input);
+        perceptron.Fit(input, outputs, 10000);
 
-            perceptron.Fit(input, outputs, 10000);
+        perceptron.Predict(input);
 
-            perceptron.Predict(input);
+        Matrix firstPrediction = new(perceptron.Predict(xTest));
 
-            Matrix firstPrediction = new(perceptron.Predict(xTest));
+            Console.WriteLine(firstPrediction.ToString());
 
-                Console.WriteLine(firstPrediction.ToString());
+        Matrix secondPrediction = new(perceptron.Predict(xTest2));
 
-            Matrix secondPrediction = new(perceptron.Predict(xTest2));
+            Console.WriteLine(secondPrediction.ToString());
 
-                Console.WriteLine(secondPrediction.ToString());
+        Matrix thirdPrediction = new(perceptron.Predict(xTest3));
 
-            Matrix thirdPrediction = new(perceptron.Predict(xTest3));
+            Console.WriteLine(thirdPrediction.ToString());
 
-                Console.WriteLine(thirdPrediction.ToString());
+        Matrix fourthPrediction = new(perceptron.Predict(xTest4));
 
-            Matrix fourthPrediction = new(perceptron.Predict(xTest4));
-
-                Console.WriteLine(fourthPrediction.ToString());
-        }
+            Console.WriteLine(fourthPrediction.ToString());
     }
 }
