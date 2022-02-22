@@ -141,21 +141,9 @@ namespace Lab1
 			{
 				Matrix xTrainMatrix = new(xTrain);
 
-					//Console.WriteLine(xTrainMatrix.ToString());
-
-				//double[,] firstLayerWeights = new double[2, 4]
-				//{
-				//	{ 0.81377233, 0.36367063, 0.9062002, 0.13996215 },
-				//	{ 0.95584121, 0.82865029, 0.50139206, 0.50926942 }
-				//};
-
 				Matrix firstLayerWeightsMatrix = new(firstLayerWeights);
 
-					//Console.WriteLine(firstLayerWeightsMatrix.ToString());
-
 				Matrix xTrainDotFirstLayerWeigth = xTrainMatrix.Multiply(firstLayerWeightsMatrix);
-
-					//Console.WriteLine(xTrainDotFirstLayerWeigth.ToString());
 
 				double[,] firstLayer = xTrainDotFirstLayerWeigth.Array;
 
@@ -179,23 +167,9 @@ namespace Lab1
 
 				Matrix firstLayerMatrix1 = new(firstLayer);
 
-					//Console.WriteLine(firstLayerMatrix1.ToString());
-
-				//double[,] secondLayerWeights = new double[4, 1]
-				//{
-				//	{ 0.16980977 },
-				//	{ 0.92468996 },
-				//	{ 0.27498607 },
-				//	{ 0.07080158 }
-				//};
-
 				Matrix secondLayerWeightsMatrix1 = new(secondLayerWeights);
 
-					//Console.WriteLine(secondLayerWeightsMatrix1.ToString());
-
 				Matrix dot1 = firstLayerMatrix1.Multiply(secondLayerWeightsMatrix1);
-
-					//Console.WriteLine(dot1.ToString());
 
 				double[,] secondLayer = dot1.Array;
 
@@ -206,10 +180,6 @@ namespace Lab1
 						secondLayer[i, j] = Sigmoid(secondLayer[i, j]);
 					}
 				}
-
-				Matrix secondLayerMatrix = new(secondLayer);
-
-					//Console.WriteLine(secondLayerMatrix.ToString());
 
 				////
 
@@ -224,14 +194,8 @@ namespace Lab1
 				}
 
 				//////////////////
-				
-				Matrix yTrainMatrix = new(yTrain);
-
-					//Console.WriteLine(yTrainMatrix.ToString());
 
 				Matrix secondLayerErrorMatrix = new(secondLayerError);
-
-					//Console.WriteLine(secondLayerErrorMatrix.ToString());
 
 				for (int i = 0; i < secondLayer.GetUpperBound(0)+1; i++)
 				{
@@ -243,12 +207,8 @@ namespace Lab1
 
 				Matrix secondLayerMatrix1 = new(secondLayer);
 
-					//Console.WriteLine(secondLayerMatrix1.ToString());
-
 				Matrix secondLayerDeltaMatrix = secondLayerMatrix1.
 					Hadamard(secondLayerErrorMatrix);
-
-					//Console.WriteLine(secondLayerDeltaMatrix.ToString());
 
 				////
 
@@ -257,12 +217,8 @@ namespace Lab1
 				Matrix secondLayerWeightsMatrixTransposed =
 					secondLayerWeightsMatrix.Transpose();
 
-					//Console.WriteLine(secondLayerWeightsMatrixTransposed.ToString());
-
 				Matrix firstLayerErrorMatrix = secondLayerDeltaMatrix.
 					Multiply(secondLayerWeightsMatrixTransposed);
-
-					//Console.WriteLine(firstLayerErrorMatrix.ToString());
 
 				////
 
@@ -278,26 +234,10 @@ namespace Lab1
 
 				Matrix firstLayerDerivativeMatrix = new(firstLayerDerivative);
 
-					//Console.WriteLine(firstLayerDerivativeMatrix.ToString());
-
 				Matrix firstLayerDeltaMatrix = firstLayerDerivativeMatrix.
 					Hadamard(firstLayerErrorMatrix);
 
-					//Console.WriteLine(firstLayerDeltaMatrix.ToString());
-
 				////
-
-				//double[,] secondLayerWeights1 = 
-				//	{ 
-				//		{ 0.45343229 },
-				//		{ 0.68019613 },
-				//		{ 0.10682657 },
-				//		{ 0.00621122 }
-				//	};
-
-					//Console.WriteLine(firstLayerMatrix1.Transpose().ToString());
-
-					//Console.WriteLine(secondLayerDeltaMatrix.ToString());
 
 				Matrix dot2 = firstLayerMatrix1.Transpose().Multiply(secondLayerDeltaMatrix); 
 
@@ -309,24 +249,13 @@ namespace Lab1
 					}
 				}
 
-					//Console.WriteLine(dot2.ToString());
-
-				Matrix secondLayerWeightsMatrix2 = new(secondLayerWeights);
-
-					//Console.WriteLine(secondLayerWeightsMatrix2.ToString());
-
 				////
 
 				Matrix firstMatrix2 = new(xTrain);
 				firstMatrix2 = firstMatrix2.Transpose();
 
-					//Console.WriteLine(firstMatrix2.ToString());
-
-					//Console.WriteLine(firstLayerDeltaMatrix.ToString());
-
 				Matrix dot3 = firstMatrix2.Multiply(firstLayerDeltaMatrix);
 
-					//Console.WriteLine(dot3.ToString());
 
 				for (int i = 0; i < firstLayerWeights.GetUpperBound(0) + 1; i++)
 				{
@@ -335,10 +264,6 @@ namespace Lab1
 						firstLayerWeights[i, j] += dot3[i, j];
 					}
 				}
-
-				Matrix firstLayerWeightsMatrix1 = new(firstLayerWeights);
-
-					//Console.WriteLine(firstLayerWeightsMatrix1.ToString());
 			}
 		}
 
