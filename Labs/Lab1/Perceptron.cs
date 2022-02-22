@@ -36,7 +36,10 @@ public class Perceptron
 
     private void GenerateWeights()
 	{
-		int firstLayerLength = Input.GetUpperBound(0) + 1;
+        // During the training phase, the network is trained by adjusting
+        // these weights to be able to predict the correct class for the input.
+
+        int firstLayerLength = Input.GetUpperBound(0) + 1;
 		int secondLayerLength = Input.GetUpperBound(1) + 1;
 
 		_firstLayerWeights = new double[secondLayerLength, firstLayerLength];
@@ -120,20 +123,15 @@ public class Perceptron
 
 			double[,] firstLayer = dotXTrainAndFirstLayerWeigth.Array;
 
-			for (int i = 0; i < dotXTrainAndFirstLayerWeigth.Rows; i++)
-			{
-				for (int j = 0; j < dotXTrainAndFirstLayerWeigth.Columns; j++)
-				{
-					firstLayer[i, j] += _bias;
-				}
-			}
+            // Adjusting with bias and activating training
 
 			for (int i = 0; i < dotXTrainAndFirstLayerWeigth.Rows; i++)
 			{
 				for (int j = 0; j < dotXTrainAndFirstLayerWeigth.Columns; j++)
 				{
+					firstLayer[i, j] += _bias;
 					firstLayer[i, j] = Sigmoid(firstLayer[i, j]);
-				}
+                }
 			}
 
 			Matrix firstLayerMatrix = new(firstLayer);
@@ -153,9 +151,9 @@ public class Perceptron
 				}
 			}
 
-			////
+            // Calculate the prediction error
 
-			double[,] secondLayerError = dotFirstLayerAndSecondLayerWeights.Array;
+            double[,] secondLayerError = dotFirstLayerAndSecondLayerWeights.Array;
 
 			for (int i = 0; i < dotFirstLayerAndSecondLayerWeights.Rows; i++)
 			{
@@ -164,8 +162,6 @@ public class Perceptron
 					secondLayerError[i, j] = yTrain[i, j] - secondLayer[i, j];
 				}
 			}
-
-			//////////////////
 
 			Matrix secondLayerErrorMatrix = new(secondLayerError);
 
@@ -182,15 +178,11 @@ public class Perceptron
 			Matrix secondLayerDeltaMatrix = secondLayerMatrix.
 				Hadamard(secondLayerErrorMatrix);
 
-			////
-
 			Matrix secondLayerWeightsMatrixTransposed =
 				secondLayerWeightsMatrix.Transpose();
 
 			Matrix firstLayerErrorMatrix = secondLayerDeltaMatrix.
 				Multiply(secondLayerWeightsMatrixTransposed);
-
-			////
 
 			double[,] firstLayerDerivative = firstLayer;
 
@@ -207,7 +199,8 @@ public class Perceptron
 			Matrix firstLayerDeltaMatrix = firstLayerDerivativeMatrix.
 				Hadamard(firstLayerErrorMatrix);
 
-			////
+			// Adjusting the weights
+            // Second Weights
 
 			Matrix dotFirstLayerAndSecondLayerDelta = firstLayerMatrix.Transpose()
                 .Multiply(secondLayerDeltaMatrix); 
@@ -220,9 +213,9 @@ public class Perceptron
 				}
 			}
 
-			////
+            // First Weights
 
-			Matrix xTrainTransposedMatrix = xTrainMatrix.Transpose();
+            Matrix xTrainTransposedMatrix = xTrainMatrix.Transpose();
 
 			Matrix dotXTrainTransposedAndFirstLayerDeltaMatrix =
                 xTrainTransposedMatrix.Multiply(firstLayerDeltaMatrix);
