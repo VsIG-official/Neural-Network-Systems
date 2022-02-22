@@ -1,22 +1,56 @@
 ﻿using Lab1;
+using SML.Matrices;
 
-namespace Labs
+namespace Labs;
+
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            double[,] input = new double[,] 
+        double[,] input = new double[,] 
+        { 
+            { 0, 0 }, 
+            { 0, 1 }, 
+            { 1, 0 }, 
+            { 1, 1 } 
+        };
+
+        double[,] outputs = 
             { 
-                { 1, 0 }, 
-                { 1, 1 }, 
-                { 0, 1 }, 
-                { 0, 0 } 
+                { 0 }, 
+                { 1 },
+                { 1 }, 
+                { 0 } 
             };
 
-            int[] outputs = { 1, 0, 1, 0 };
+        Perceptron perceptron = new(input);
+        perceptron.Start();
 
-            Perceptron perceptron = new(input);
-        }    
+        double[,] xTest = { { 1, 1 } };
+        double[,] xTest2 = { { 0, 0 } };
+        double[,] xTest3 = { { 0, 1 } };
+        double[,] xTest4 = { { 1, 0 } };
+
+        perceptron.Predict(input);
+
+        perceptron.Fit(input, outputs, 10000);
+
+        perceptron.Predict(input);
+
+        Matrix firstPrediction = new(perceptron.Predict(xTest));
+
+            Console.WriteLine(firstPrediction.ToString());
+
+        Matrix secondPrediction = new(perceptron.Predict(xTest2));
+
+            Console.WriteLine(secondPrediction.ToString());
+
+        Matrix thirdPrediction = new(perceptron.Predict(xTest3));
+
+            Console.WriteLine(thirdPrediction.ToString());
+
+        Matrix fourthPrediction = new(perceptron.Predict(xTest4));
+
+            Console.WriteLine(fourthPrediction.ToString());
     }
 }
