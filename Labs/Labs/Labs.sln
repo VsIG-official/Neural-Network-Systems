@@ -11,6 +11,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AdditionalTask", "..\OldExa
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Lab7", "..\Lab7\Lab7.pyproj", "{06BA158D-F54F-4394-B2D9-552FDE82EEE0}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Lab3", "..\Lab3\Lab3.pyproj", "{9B1803B2-31B2-4A50-8F30-02A90A31B095}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,8 @@ Global
 		{01273511-9EFD-4653-AEBF-48DAA6830D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06BA158D-F54F-4394-B2D9-552FDE82EEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06BA158D-F54F-4394-B2D9-552FDE82EEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B1803B2-31B2-4A50-8F30-02A90A31B095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B1803B2-31B2-4A50-8F30-02A90A31B095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
