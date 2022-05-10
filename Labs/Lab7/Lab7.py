@@ -124,7 +124,7 @@ example_texts = ["This book is good",
                  "this game came with none of the promised improvements and didn't even fix the old bugs",
                  "What an incredible game this is a wholesome openworld game I dont understand why some of the idiots are writing emotional review how could people without rational judgment write a review?",
                  "Great feeling of exploration, the world is huge",
-                 "I really like this food from the store"]
+                 "I don't like this food from the store"]
 
 for text in example_texts:
   print(predict(text))
