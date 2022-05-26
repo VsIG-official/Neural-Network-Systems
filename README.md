@@ -1,7 +1,7 @@
 # Neural-Network-Systems
 
 <p align="center">
-  <img src="https://github.com/VsIG-official/Images/blob/master/LogoFinalWhite.png" data-canonical-src="https://github.com/VsIG-official/Images/blob/master/LogoFinalWhite.png" width="200" height="100" />
+  <img src="https://github.com/VsIG-official/Neural-Network-Systems/blob/master/docs/NNS.png" data-canonical-src="https://github.com/VsIG-official/Neural-Network-Systems/blob/master/docs/NNS.png" width="600" height="300" />
 </p>
 
 ## Table of Contents
