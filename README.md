@@ -17,6 +17,9 @@ This repo contains all of My work for Neural Network Systems
 
 ## Badges
 
+![Theme](https://img.shields.io/badge/Theme-Neural--Networks-blueviolet.svg?style=flat-square)
+![Language](https://img.shields.io/badge/Language-CSharp-blueviolet.svg?style=flat-square)
+![Language](https://img.shields.io/badge/Language-Python-green.svg?style=flat-square)
 
 
 ---
