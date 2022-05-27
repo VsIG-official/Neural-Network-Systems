@@ -24,7 +24,16 @@ This repo contains all of My work for Neural Network Systems
 ## Example
 
 ```python
+model = tf.keras.Sequential([tf.keras.layers.Embedding(encoder.vocab_size, batch_size),
+                           tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(units = 64)),
+                           tf.keras.layers.Dense(units = 64, activation = activation_type),
+                           tf.keras.layers.Dense(units = 1)
+])
 
+# BinaryCrossEntropy = two label classes
+model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate = learning_rate),
+              loss = tf.keras.losses.BinaryCrossentropy(from_logits = True),
+              metrics = [metrics_type])
 ```
 
 ---
